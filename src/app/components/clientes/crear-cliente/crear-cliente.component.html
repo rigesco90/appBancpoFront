@@ -1,0 +1,87 @@
+<div class="row text-right">
+    <div class="col">
+        <button class="btn btn-danger" (click)="reiniciarValorEsVer()" routerLink="/clientes">
+        <i class="fa fa-arrow-left"></i>
+        Regresar
+      </button>
+    </div>
+</div>
+
+<form [formGroup]="formularioCliente">
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label for="inputIdentificacion">Identificación</label>
+            <input type="text" class="form-control" id="inputIdentificacion" formControlName="identificacion" required [disabled]="esVer">
+            <div *ngIf="formularioCliente.get('identificacion').errors" class="form-control-feedback">
+                La identificación es requerida.
+            </div>
+        </div>
+
+        <div class="form-group col-md-4">
+            <label for="inputNombre">Nombre(s)</label>
+            <input type="text" class="form-control" id="inputNombre" formControlName="nombre" required>
+            <div *ngIf="formularioCliente.get('nombre').errors" class="form-control-feedback">
+                El nombre es requerido.
+            </div>
+        </div>
+
+        <div class="form-group col-md-4">
+            <label for="inputApellido">Apellido(s)</label>
+            <input type="text" class="form-control" id="inputApellido" formControlName="apellido" required>
+            <div *ngIf="formularioCliente.get('apellido').errors" class="form-control-feedback">
+                El apellido es requerido.
+            </div>
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label for="inputCiudad">Ciudad</label>
+            <input type="text" class="form-control" id="inputCiudad" formControlName="ciudad" required="true">
+        </div>
+
+        <div class="form-group col-md-4">
+            <label for="inputDireccion">Dirección</label>
+            <input type="text" class="form-control" id="inputDireccion" formControlName="direccion" required>
+        </div>
+        <div class="form-group col-md-4">
+            <label for="inputTelefono">Teléfono</label>
+            <input type="text" class="form-control" id="inputTelefono" formControlName="telefono" required>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="inputState">Tarjetas Asociadas</label>
+        <select id="inputState" class="form-control">
+              <option selected>Seleccione...</option>
+              <option>1234-1234-5678-9087</option>
+            </select>
+    </div>
+
+    <table class="table mt-3 animated fadeIn faster animated fadeIn faster" *ngIf="esVer">
+        <thead>
+            <tr>
+                <th>Número</th>
+                <th>Tipo</th>
+                <th>CCV</th>
+                <th>Consumos</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let tarjeta of tarjetas; let i = index">
+                <td>{{ tarjeta.numero }}</td>
+                <td>{{ tarjeta.tipo }}</td>
+                <td>{{ tarjeta.ccv }}</td>
+                <td>{{ tarjeta.consumos.length }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <hr>
+    <div class="form-group text-center" *ngIf="!esVer">
+        <button class="btn btn-primary w-25" (click)="guardarEditarCliente()">
+        <i class="fa fa-save"></i>
+        Guardar
+      </button>
+    </div>
+</form>
